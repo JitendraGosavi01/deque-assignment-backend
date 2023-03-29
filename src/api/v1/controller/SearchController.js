@@ -21,12 +21,17 @@ export default class SearchController {
       });
     } else {
       try {
-        const result = await searchService.getSearchResult(
+        const { data, author } = await searchService.getSearchResult(
           searchContext,
           startIndex,
           maxResult
         );
-        res.status(200).json({ data: result, msg: "success", status: 200 });
+        res.status(200).json({
+          data,
+          metadata: { mostCommonAuthor: author },
+          msg: "success",
+          status: 200,
+        });
       } catch (error) {
         res.status(500).json(error);
       }
